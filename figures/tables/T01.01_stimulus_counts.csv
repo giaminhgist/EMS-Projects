@@ -1,0 +1,5 @@
+category,n_stimuli,example_stimulus
+social,22,soc_093.jpg
+natural,31,ind_016.jpg
+synthetic,15,cat_013.jpg
+manipulated,32,low_033.jpg

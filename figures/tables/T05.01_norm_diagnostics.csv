@@ -1,0 +1,2 @@
+ablation,effective_rank,train_hc_mean_dist,eval_hc_mean_rms,eval_sz_mean_rms
+mlp_deepset,16.62811158861405,3.3769886,1.0262043,1.1199186
