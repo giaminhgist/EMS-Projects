@@ -1,11 +1,3 @@
-# runtime outputs (regenerable)
-outputs/
-experiment/matrix_status.csv
-
-# data (raw EMS is license-restricted; processed artifacts are derived from it)
-original_dataset/
-processed_dataset/
-
 # python
 __pycache__/
 *.pyc
@@ -13,10 +5,6 @@ __pycache__/
 *.egg-info/
 .ipynb_checkpoints/
 .claude/
-
-# per-subject predictions (kept local; benchmark submission files)
-val_preds.csv
-official_test_preds.csv
 
 # Ignore all uv / Python virtual environments
 .venv/
