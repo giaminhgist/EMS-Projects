@@ -1,0 +1,34 @@
+### EXP-PROP-005-s2024 started 2026-09-23T01:52:19
+$ /root/EMS-Projects/.venv/bin/python src/proposal/train.py --experiment EXP-PROP-005 --ablation mlp_max --deviation learned --pool max --fold all --seed 2024 --epochs 150 --patience 30 --feature_set full45 --comparator mlp
+Set_0: AUC=1.0000 Acc=0.9500 Sen=0.9091 Spec=1.0000 F1=0.9524 (best epoch 76, 107 epochs, early_stopping)
+Set_1: AUC=0.8646 Acc=0.7500 Sen=0.8125 Spec=0.7083 F1=0.7222 (best epoch 34, 65 epochs, early_stopping)
+Set_2: AUC=0.9650 Acc=0.9250 Sen=0.8500 Spec=1.0000 F1=0.9189 (best epoch 1, 32 epochs, early_stopping)
+Set_3: AUC=0.9571 Acc=0.8000 Sen=0.6364 Spec=1.0000 F1=0.7778 (best epoch 28, 59 epochs, early_stopping)
+{
+ "acc": {
+  "mean": 0.85625,
+  "std": 0.09655525188547054
+ },
+ "auc": {
+  "mean": 0.9466635101010101,
+  "std": 0.05781139790600679
+ },
+ "balanced_acc": {
+  "mean": 0.8645359848484848,
+  "std": 0.09082426795627581
+ },
+ "sen": {
+  "mean": 0.8019886363636364,
+  "std": 0.11735717170539132
+ },
+ "spec": {
+  "mean": 0.9270833333333334,
+  "std": 0.14583333333333331
+ },
+ "f1": {
+  "mean": 0.8428249678249677,
+  "std": 0.11040676658773461
+ }
+}
+
+### exit=0 duration=153s

@@ -1,0 +1,116 @@
+{
+  "experiment": "EXP-PROP-003",
+  "ablation": "mlp_attn",
+  "feature_set": "full45",
+  "seed": 64,
+  "folds": [
+    "Set_0",
+    "Set_1",
+    "Set_2",
+    "Set_3"
+  ],
+  "fold_metrics": [
+    {
+      "acc": 0.9,
+      "auc": 0.9722222222222223,
+      "balanced_acc": 0.893939393939394,
+      "sen": 0.9545454545454546,
+      "spec": 0.8333333333333334,
+      "pre": 0.875,
+      "f1": 0.9130434782608695,
+      "tp": 21,
+      "tn": 15,
+      "fp": 3,
+      "fn": 1,
+      "threshold": 0.5,
+      "auc_reason": null,
+      "fold": "Set_0",
+      "best_epoch": 7,
+      "epochs_trained": 38,
+      "stopping_reason": "early_stopping"
+    },
+    {
+      "acc": 0.725,
+      "auc": 0.8828125,
+      "balanced_acc": 0.6979166666666667,
+      "sen": 0.5625,
+      "spec": 0.8333333333333334,
+      "pre": 0.6923076923076923,
+      "f1": 0.6206896551724138,
+      "tp": 9,
+      "tn": 20,
+      "fp": 4,
+      "fn": 7,
+      "threshold": 0.5,
+      "auc_reason": null,
+      "fold": "Set_1",
+      "best_epoch": 16,
+      "epochs_trained": 47,
+      "stopping_reason": "early_stopping"
+    },
+    {
+      "acc": 0.85,
+      "auc": 0.97,
+      "balanced_acc": 0.85,
+      "sen": 0.95,
+      "spec": 0.75,
+      "pre": 0.7916666666666666,
+      "f1": 0.8636363636363635,
+      "tp": 19,
+      "tn": 15,
+      "fp": 5,
+      "fn": 1,
+      "threshold": 0.5,
+      "auc_reason": null,
+      "fold": "Set_2",
+      "best_epoch": 3,
+      "epochs_trained": 34,
+      "stopping_reason": "early_stopping"
+    },
+    {
+      "acc": 0.775,
+      "auc": 0.9090909090909092,
+      "balanced_acc": 0.7853535353535352,
+      "sen": 0.6818181818181818,
+      "spec": 0.8888888888888888,
+      "pre": 0.8823529411764706,
+      "f1": 0.7692307692307693,
+      "tp": 15,
+      "tn": 16,
+      "fp": 2,
+      "fn": 7,
+      "threshold": 0.5,
+      "auc_reason": null,
+      "fold": "Set_3",
+      "best_epoch": 42,
+      "epochs_trained": 73,
+      "stopping_reason": "early_stopping"
+    }
+  ],
+  "mean_metrics": {
+    "acc": {
+      "mean": 0.8125,
+      "std": 0.07772815877574013
+    },
+    "auc": {
+      "mean": 0.9335314078282828,
+      "std": 0.04470899582589138
+    },
+    "balanced_acc": {
+      "mean": 0.8068023989898989,
+      "std": 0.08519594097669621
+    },
+    "sen": {
+      "mean": 0.787215909090909,
+      "std": 0.19672633932100864
+    },
+    "spec": {
+      "mean": 0.826388888888889,
+      "std": 0.05726535591135638
+    },
+    "f1": {
+      "mean": 0.7916500665751041,
+      "std": 0.128644826979417
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "train": {
+    "acc": 1.0,
+    "auc": 1.0,
+    "balanced_acc": 1.0,
+    "sen": 1.0,
+    "spec": 1.0,
+    "f1": 1.0
+  },
+  "val": {
+    "acc": 0.575,
+    "auc": 0.5859375,
+    "balanced_acc": 0.5729166666666667,
+    "sen": 0.5625,
+    "spec": 0.5833333333333334,
+    "f1": 0.5142857142857142
+  },
+  "train_counts": {
+    "tp": 64,
+    "tn": 56,
+    "fp": 0,
+    "fn": 0
+  },
+  "val_counts": {
+    "tp": 9,
+    "tn": 14,
+    "fp": 10,
+    "fn": 7
+  },
+  "train_loss": null,
+  "val_loss": null,
+  "stage": "fit_complete",
+  "epoch": null,
+  "method": "lr_l1",
+  "rep": "concat",
+  "seed": 123,
+  "fold": "Set_1"
+}

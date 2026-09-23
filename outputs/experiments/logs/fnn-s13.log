@@ -1,0 +1,34 @@
+### fnn-s13 started 2026-09-23T01:58:18
+$ /root/EMS-Projects/.venv/bin/python src/baseline/run_experiment.py --method fnn --seed 13
+  Set_0: auc=0.9091 acc=0.7750 sen=0.7727 spec=0.7778 f1=0.7907
+  Set_1: auc=0.8542 acc=0.7750 sen=0.6875 spec=0.8333 f1=0.7097
+  Set_2: auc=0.9975 acc=0.9750 sen=1.0000 spec=0.9500 f1=0.9756
+  Set_3: auc=0.8914 acc=0.8000 sen=0.7273 spec=0.8889 f1=0.8000
+{
+ "acc": {
+  "mean": 0.83125,
+  "std": 0.09655525188547054
+ },
+ "auc": {
+  "mean": 0.9130429292929293,
+  "std": 0.06078057261449733
+ },
+ "balanced_acc": {
+  "mean": 0.8296875,
+  "std": 0.09890093801104469
+ },
+ "sen": {
+  "mean": 0.796875,
+  "std": 0.13982160699887036
+ },
+ "spec": {
+  "mean": 0.8624999999999999,
+  "std": 0.07389445815825468
+ },
+ "f1": {
+  "mean": 0.818996212467751,
+  "std": 0.11201199923786297
+ }
+}
+
+### exit=0 duration=11s

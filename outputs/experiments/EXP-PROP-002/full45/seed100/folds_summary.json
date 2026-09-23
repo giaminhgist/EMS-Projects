@@ -1,0 +1,116 @@
+{
+  "experiment": "EXP-PROP-002",
+  "ablation": "mlp_mean",
+  "feature_set": "full45",
+  "seed": 100,
+  "folds": [
+    "Set_0",
+    "Set_1",
+    "Set_2",
+    "Set_3"
+  ],
+  "fold_metrics": [
+    {
+      "acc": 0.85,
+      "auc": 0.9747474747474749,
+      "balanced_acc": 0.8333333333333333,
+      "sen": 1.0,
+      "spec": 0.6666666666666666,
+      "pre": 0.7857142857142857,
+      "f1": 0.88,
+      "tp": 22,
+      "tn": 12,
+      "fp": 6,
+      "fn": 0,
+      "threshold": 0.5,
+      "auc_reason": null,
+      "fold": "Set_0",
+      "best_epoch": 22,
+      "epochs_trained": 53,
+      "stopping_reason": "early_stopping"
+    },
+    {
+      "acc": 0.825,
+      "auc": 0.8932291666666666,
+      "balanced_acc": 0.84375,
+      "sen": 0.9375,
+      "spec": 0.75,
+      "pre": 0.7142857142857143,
+      "f1": 0.8108108108108109,
+      "tp": 15,
+      "tn": 18,
+      "fp": 6,
+      "fn": 1,
+      "threshold": 0.5,
+      "auc_reason": null,
+      "fold": "Set_1",
+      "best_epoch": 5,
+      "epochs_trained": 36,
+      "stopping_reason": "early_stopping"
+    },
+    {
+      "acc": 0.925,
+      "auc": 0.97,
+      "balanced_acc": 0.925,
+      "sen": 1.0,
+      "spec": 0.85,
+      "pre": 0.8695652173913043,
+      "f1": 0.9302325581395349,
+      "tp": 20,
+      "tn": 17,
+      "fp": 3,
+      "fn": 0,
+      "threshold": 0.5,
+      "auc_reason": null,
+      "fold": "Set_2",
+      "best_epoch": 7,
+      "epochs_trained": 38,
+      "stopping_reason": "early_stopping"
+    },
+    {
+      "acc": 0.775,
+      "auc": 0.8863636363636365,
+      "balanced_acc": 0.7702020202020202,
+      "sen": 0.8181818181818182,
+      "spec": 0.7222222222222222,
+      "pre": 0.782608695652174,
+      "f1": 0.8,
+      "tp": 18,
+      "tn": 13,
+      "fp": 5,
+      "fn": 4,
+      "threshold": 0.5,
+      "auc_reason": null,
+      "fold": "Set_3",
+      "best_epoch": 23,
+      "epochs_trained": 54,
+      "stopping_reason": "early_stopping"
+    }
+  ],
+  "mean_metrics": {
+    "acc": {
+      "mean": 0.8437499999999999,
+      "std": 0.06250000000000001
+    },
+    "auc": {
+      "mean": 0.9310850694444446,
+      "std": 0.04779767570678015
+    },
+    "balanced_acc": {
+      "mean": 0.8430713383838384,
+      "std": 0.0635545237059002
+    },
+    "sen": {
+      "mean": 0.9389204545454546,
+      "std": 0.08571514402938349
+    },
+    "spec": {
+      "mean": 0.7472222222222222,
+      "std": 0.07677930533936252
+    },
+    "f1": {
+      "mean": 0.8552608422375865,
+      "std": 0.06127084703925896
+    }
+  }
+}

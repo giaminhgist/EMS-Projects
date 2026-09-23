@@ -1,0 +1,34 @@
+### EXP-PROP-004-s64 started 2026-09-23T01:52:03
+$ /root/EMS-Projects/.venv/bin/python src/proposal/train.py --experiment EXP-PROP-004 --ablation z_mean --deviation z --pool mean --fold all --seed 64 --epochs 150 --patience 30 --feature_set full45
+Set_0: AUC=0.9747 Acc=0.9000 Sen=0.9091 Spec=0.8889 F1=0.9091 (best epoch 98, 129 epochs, early_stopping)
+Set_1: AUC=0.8568 Acc=0.7250 Sen=0.7500 Spec=0.7083 F1=0.6857 (best epoch 42, 73 epochs, early_stopping)
+Set_2: AUC=0.9625 Acc=0.8000 Sen=0.9000 Spec=0.7000 F1=0.8182 (best epoch 35, 66 epochs, early_stopping)
+Set_3: AUC=0.8384 Acc=0.8000 Sen=0.7273 Spec=0.8889 F1=0.8000 (best epoch 70, 101 epochs, early_stopping)
+{
+ "acc": {
+  "mean": 0.8062499999999999,
+  "std": 0.07180703308172538
+ },
+ "auc": {
+  "mean": 0.9081005366161616,
+  "std": 0.0704657657548417
+ },
+ "balanced_acc": {
+  "mean": 0.8090593434343434,
+  "std": 0.06965001521544421
+ },
+ "sen": {
+  "mean": 0.821590909090909,
+  "std": 0.09630751653451994
+ },
+ "spec": {
+  "mean": 0.7965277777777778,
+  "std": 0.10670367317160526
+ },
+ "f1": {
+  "mean": 0.8032467532467532,
+  "std": 0.09174323557605829
+ }
+}
+
+### exit=0 duration=16s

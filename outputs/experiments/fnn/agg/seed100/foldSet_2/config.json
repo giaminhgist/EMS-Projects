@@ -1,0 +1,16 @@
+{
+  "experiment": "fnn",
+  "feature_set": "agg",
+  "protocol_version": "experiments-dev-1",
+  "proposal": "baseline",
+  "ablation": "fnn",
+  "seed": 100,
+  "fold": "Set_2",
+  "epochs": 150,
+  "patience": 20,
+  "lr": 0.001,
+  "weight_decay": 0.0001,
+  "batch_size": 16,
+  "dropout": 0.3,
+  "extra": {}
+}

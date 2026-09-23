@@ -1,0 +1,42 @@
+### svm_linear-s2026 started 2026-09-23T01:57:37
+$ /root/EMS-Projects/.venv/bin/python src/baseline/run_experiment.py --method svm_linear --seed 2026
+/root/EMS-Projects/.venv/lib/python3.12/site-packages/sklearn/svm/_base.py:239: FutureWarning: The `probability` parameter was deprecated in 1.9 and will be removed in version 1.11. Use `CalibratedClassifierCV(SVC(), ensemble=False)` instead of `SVC(probability=True)`
+  warnings.warn(
+  Set_0: auc=0.8005 acc=0.6750 sen=0.6818 spec=0.6667 f1=0.6977
+/root/EMS-Projects/.venv/lib/python3.12/site-packages/sklearn/svm/_base.py:239: FutureWarning: The `probability` parameter was deprecated in 1.9 and will be removed in version 1.11. Use `CalibratedClassifierCV(SVC(), ensemble=False)` instead of `SVC(probability=True)`
+  warnings.warn(
+  Set_1: auc=0.7370 acc=0.7000 sen=0.7500 spec=0.6667 f1=0.6667
+/root/EMS-Projects/.venv/lib/python3.12/site-packages/sklearn/svm/_base.py:239: FutureWarning: The `probability` parameter was deprecated in 1.9 and will be removed in version 1.11. Use `CalibratedClassifierCV(SVC(), ensemble=False)` instead of `SVC(probability=True)`
+  warnings.warn(
+  Set_2: auc=0.9200 acc=0.8500 sen=0.8000 spec=0.9000 f1=0.8421
+/root/EMS-Projects/.venv/lib/python3.12/site-packages/sklearn/svm/_base.py:239: FutureWarning: The `probability` parameter was deprecated in 1.9 and will be removed in version 1.11. Use `CalibratedClassifierCV(SVC(), ensemble=False)` instead of `SVC(probability=True)`
+  warnings.warn(
+  Set_3: auc=0.8182 acc=0.8000 sen=0.7727 spec=0.8333 f1=0.8095
+{
+ "acc": {
+  "mean": 0.7562500000000001,
+  "std": 0.08260094833999586
+ },
+ "auc": {
+  "mean": 0.8189165088383838,
+  "std": 0.07587516457073096
+ },
+ "balanced_acc": {
+  "mean": 0.758901515151515,
+  "std": 0.08158959604281893
+ },
+ "sen": {
+  "mean": 0.7511363636363635,
+  "std": 0.050530927714097895
+ },
+ "spec": {
+  "mean": 0.7666666666666667,
+  "std": 0.11863420280034795
+ },
+ "f1": {
+  "mean": 0.7539925394882554,
+  "std": 0.0849413774869791
+ }
+}
+
+### exit=0 duration=5s

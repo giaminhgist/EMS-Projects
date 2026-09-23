@@ -1,0 +1,42 @@
+### svm_linear-s0 started 2026-09-23T01:56:01
+$ /root/EMS-Projects/.venv/bin/python src/baseline/run_experiment.py --method svm_linear --seed 0
+/root/EMS-Projects/.venv/lib/python3.12/site-packages/sklearn/svm/_base.py:239: FutureWarning: The `probability` parameter was deprecated in 1.9 and will be removed in version 1.11. Use `CalibratedClassifierCV(SVC(), ensemble=False)` instead of `SVC(probability=True)`
+  warnings.warn(
+  Set_0: auc=0.8005 acc=0.6750 sen=0.6818 spec=0.6667 f1=0.6977
+/root/EMS-Projects/.venv/lib/python3.12/site-packages/sklearn/svm/_base.py:239: FutureWarning: The `probability` parameter was deprecated in 1.9 and will be removed in version 1.11. Use `CalibratedClassifierCV(SVC(), ensemble=False)` instead of `SVC(probability=True)`
+  warnings.warn(
+  Set_1: auc=0.7370 acc=0.7000 sen=0.7500 spec=0.6667 f1=0.6667
+/root/EMS-Projects/.venv/lib/python3.12/site-packages/sklearn/svm/_base.py:239: FutureWarning: The `probability` parameter was deprecated in 1.9 and will be removed in version 1.11. Use `CalibratedClassifierCV(SVC(), ensemble=False)` instead of `SVC(probability=True)`
+  warnings.warn(
+  Set_2: auc=0.9200 acc=0.8250 sen=0.7500 spec=0.9000 f1=0.8108
+/root/EMS-Projects/.venv/lib/python3.12/site-packages/sklearn/svm/_base.py:239: FutureWarning: The `probability` parameter was deprecated in 1.9 and will be removed in version 1.11. Use `CalibratedClassifierCV(SVC(), ensemble=False)` instead of `SVC(probability=True)`
+  warnings.warn(
+  Set_3: auc=0.8182 acc=0.8000 sen=0.7727 spec=0.8333 f1=0.8095
+{
+ "acc": {
+  "mean": 0.75,
+  "std": 0.07359800721939871
+ },
+ "auc": {
+  "mean": 0.8189165088383838,
+  "std": 0.07587516457073096
+ },
+ "balanced_acc": {
+  "mean": 0.752651515151515,
+  "std": 0.07276540456578445
+ },
+ "sen": {
+  "mean": 0.7386363636363635,
+  "std": 0.039364791081110864
+ },
+ "spec": {
+  "mean": 0.7666666666666667,
+  "std": 0.11863420280034795
+ },
+ "f1": {
+  "mean": 0.7461689264014844,
+  "std": 0.07497719881144256
+ }
+}
+
+### exit=0 duration=5s

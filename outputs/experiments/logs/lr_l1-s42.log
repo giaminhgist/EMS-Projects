@@ -1,0 +1,50 @@
+### lr_l1-s42 started 2026-09-23T01:58:46
+$ /root/EMS-Projects/.venv/bin/python src/baseline/run_experiment.py --method lr_l1 --seed 42
+/root/EMS-Projects/.venv/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:1403: FutureWarning: 'penalty' was deprecated in version 1.8 and will be removed in 1.10. To avoid this warning, leave 'penalty' set to its default value and use 'l1_ratio' or 'C' instead. Use l1_ratio=0 instead of penalty='l2', l1_ratio=1 instead of penalty='l1', l1_ratio set to a float between 0 and 1 instead of penalty='elasticnet', and C=np.inf instead of penalty=None.
+  warnings.warn(
+/root/EMS-Projects/.venv/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:1429: UserWarning: Inconsistent values: penalty=l1 with l1_ratio=0.0. penalty is deprecated. Please use l1_ratio only.
+  warnings.warn(
+  Set_0: auc=0.7601 acc=0.7250 sen=0.8182 spec=0.6111 f1=0.7660
+/root/EMS-Projects/.venv/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:1403: FutureWarning: 'penalty' was deprecated in version 1.8 and will be removed in 1.10. To avoid this warning, leave 'penalty' set to its default value and use 'l1_ratio' or 'C' instead. Use l1_ratio=0 instead of penalty='l2', l1_ratio=1 instead of penalty='l1', l1_ratio set to a float between 0 and 1 instead of penalty='elasticnet', and C=np.inf instead of penalty=None.
+  warnings.warn(
+/root/EMS-Projects/.venv/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:1429: UserWarning: Inconsistent values: penalty=l1 with l1_ratio=0.0. penalty is deprecated. Please use l1_ratio only.
+  warnings.warn(
+  Set_1: auc=0.5885 acc=0.5750 sen=0.5625 spec=0.5833 f1=0.5143
+/root/EMS-Projects/.venv/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:1403: FutureWarning: 'penalty' was deprecated in version 1.8 and will be removed in 1.10. To avoid this warning, leave 'penalty' set to its default value and use 'l1_ratio' or 'C' instead. Use l1_ratio=0 instead of penalty='l2', l1_ratio=1 instead of penalty='l1', l1_ratio set to a float between 0 and 1 instead of penalty='elasticnet', and C=np.inf instead of penalty=None.
+  warnings.warn(
+/root/EMS-Projects/.venv/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:1429: UserWarning: Inconsistent values: penalty=l1 with l1_ratio=0.0. penalty is deprecated. Please use l1_ratio only.
+  warnings.warn(
+  Set_2: auc=0.8100 acc=0.7250 sen=0.9000 spec=0.5500 f1=0.7660
+/root/EMS-Projects/.venv/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:1403: FutureWarning: 'penalty' was deprecated in version 1.8 and will be removed in 1.10. To avoid this warning, leave 'penalty' set to its default value and use 'l1_ratio' or 'C' instead. Use l1_ratio=0 instead of penalty='l2', l1_ratio=1 instead of penalty='l1', l1_ratio set to a float between 0 and 1 instead of penalty='elasticnet', and C=np.inf instead of penalty=None.
+  warnings.warn(
+/root/EMS-Projects/.venv/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:1429: UserWarning: Inconsistent values: penalty=l1 with l1_ratio=0.0. penalty is deprecated. Please use l1_ratio only.
+  warnings.warn(
+  Set_3: auc=0.7727 acc=0.7250 sen=0.5909 spec=0.8889 f1=0.7027
+{
+ "acc": {
+  "mean": 0.6875,
+  "std": 0.07500000000000001
+ },
+ "auc": {
+  "mean": 0.7328424873737374,
+  "std": 0.09850521437192528
+ },
+ "balanced_acc": {
+  "mean": 0.6881155303030304,
+  "std": 0.07749550406915696
+ },
+ "sen": {
+  "mean": 0.7178977272727273,
+  "std": 0.1668259612379776
+ },
+ "spec": {
+  "mean": 0.6583333333333334,
+  "std": 0.15572081169007443
+ },
+ "f1": {
+  "mean": 0.6872258276513596,
+  "std": 0.11908701606037286
+ }
+}
+
+### exit=0 duration=5s

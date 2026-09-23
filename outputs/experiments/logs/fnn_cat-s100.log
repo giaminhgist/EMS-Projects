@@ -1,0 +1,34 @@
+### fnn_cat-s100 started 2026-09-23T01:58:34
+$ /root/EMS-Projects/.venv/bin/python src/baseline/run_experiment.py --method fnn_cat --seed 100
+  Set_0: auc=0.9596 acc=0.9250 sen=0.9091 spec=0.9444 f1=0.9302
+  Set_1: auc=0.8568 acc=0.5500 sen=0.9375 spec=0.2917 f1=0.6250
+  Set_2: auc=0.9600 acc=0.9250 sen=0.9000 spec=0.9500 f1=0.9231
+  Set_3: auc=0.8182 acc=0.7250 sen=0.5909 spec=0.8889 f1=0.7027
+{
+ "acc": {
+  "mean": 0.7812500000000001,
+  "std": 0.180710403685012
+ },
+ "auc": {
+  "mean": 0.8986371527777777,
+  "std": 0.07235842433489523
+ },
+ "balanced_acc": {
+  "mean": 0.8015625,
+  "std": 0.15239942031934117
+ },
+ "sen": {
+  "mean": 0.834375,
+  "std": 0.16309457604995511
+ },
+ "spec": {
+  "mean": 0.7687499999999999,
+  "std": 0.3192501421960232
+ },
+ "f1": {
+  "mean": 0.7952530459797902,
+  "std": 0.155037713653946
+ }
+}
+
+### exit=0 duration=11s

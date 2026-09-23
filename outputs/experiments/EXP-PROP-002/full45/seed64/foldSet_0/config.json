@@ -1,0 +1,20 @@
+{
+  "experiment": "EXP-PROP-002",
+  "feature_set": "full45",
+  "protocol_version": "experiments-dev-1",
+  "proposal": "proposal",
+  "ablation": "mlp_mean",
+  "seed": 64,
+  "fold": "Set_0",
+  "epochs": 150,
+  "patience": 30,
+  "lr": 0.001,
+  "weight_decay": 0.0001,
+  "batch_size": 16,
+  "dropout": 0.3,
+  "extra": {
+    "deviation": "learned",
+    "comparator": "mlp",
+    "pool": "mean"
+  }
+}

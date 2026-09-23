@@ -1,0 +1,117 @@
+{
+  "method": "qda",
+  "rep": "agg",
+  "seed": 2026,
+  "folds": [
+    "Set_0",
+    "Set_1",
+    "Set_2",
+    "Set_3"
+  ],
+  "fold_metrics": [
+    {
+      "acc": 0.6,
+      "auc": 0.75,
+      "balanced_acc": 0.595959595959596,
+      "sen": 0.6363636363636364,
+      "spec": 0.5555555555555556,
+      "pre": 0.6363636363636364,
+      "f1": 0.6363636363636364,
+      "tp": 14,
+      "tn": 10,
+      "fp": 8,
+      "fn": 8,
+      "threshold": 0.5,
+      "auc_reason": null,
+      "fold": "Set_0"
+    },
+    {
+      "acc": 0.75,
+      "auc": 0.8463541666666666,
+      "balanced_acc": 0.7708333333333333,
+      "sen": 0.875,
+      "spec": 0.6666666666666666,
+      "pre": 0.6363636363636364,
+      "f1": 0.7368421052631579,
+      "tp": 14,
+      "tn": 16,
+      "fp": 8,
+      "fn": 2,
+      "threshold": 0.5,
+      "auc_reason": null,
+      "fold": "Set_1"
+    },
+    {
+      "acc": 0.85,
+      "auc": 0.935,
+      "balanced_acc": 0.85,
+      "sen": 0.85,
+      "spec": 0.85,
+      "pre": 0.85,
+      "f1": 0.85,
+      "tp": 17,
+      "tn": 17,
+      "fp": 3,
+      "fn": 3,
+      "threshold": 0.5,
+      "auc_reason": null,
+      "fold": "Set_2"
+    },
+    {
+      "acc": 0.65,
+      "auc": 0.76010101010101,
+      "balanced_acc": 0.6515151515151515,
+      "sen": 0.6363636363636364,
+      "spec": 0.6666666666666666,
+      "pre": 0.7,
+      "f1": 0.6666666666666666,
+      "tp": 14,
+      "tn": 12,
+      "fp": 6,
+      "fn": 8,
+      "threshold": 0.5,
+      "auc_reason": null,
+      "fold": "Set_3"
+    }
+  ],
+  "mean_metrics": {
+    "acc": {
+      "mean": 0.7125,
+      "std": 0.11086778913041725
+    },
+    "auc": {
+      "mean": 0.8228637941919191,
+      "std": 0.08636092060440123
+    },
+    "balanced_acc": {
+      "mean": 0.7170770202020201,
+      "std": 0.11478392576297358
+    },
+    "sen": {
+      "mean": 0.7494318181818181,
+      "std": 0.13095820574859968
+    },
+    "spec": {
+      "mean": 0.6847222222222222,
+      "std": 0.12200106253332081
+    },
+    "f1": {
+      "mean": 0.7224681020733652,
+      "std": 0.09486617972188612
+    }
+  },
+  "env": {
+    "python": "3.12.3",
+    "torch": "2.11.0+cu128",
+    "numpy": "2.5.3",
+    "sklearn": "1.9.0",
+    "device": "cpu",
+    "cuda_available": false,
+    "cudnn_deterministic": false,
+    "cudnn_benchmark": false,
+    "threads_omp": "1",
+    "threads_mkl": "1",
+    "threads_openblas": "1",
+    "n_cpus": 128
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "method": "fnn_cat",
+  "rep": "catagg",
+  "seed": 3,
+  "folds": [
+    "Set_0",
+    "Set_1",
+    "Set_2",
+    "Set_3"
+  ],
+  "fold_metrics": [
+    {
+      "acc": 0.925,
+      "auc": 0.9595959595959597,
+      "balanced_acc": 0.9217171717171717,
+      "sen": 0.9545454545454546,
+      "spec": 0.8888888888888888,
+      "pre": 0.9130434782608695,
+      "f1": 0.9333333333333332,
+      "tp": 21,
+      "tn": 16,
+      "fp": 2,
+      "fn": 1,
+      "threshold": 0.5,
+      "auc_reason": null,
+      "fold": "Set_0",
+      "best_epoch": 24,
+      "epochs_trained": 45,
+      "stopping_reason": "early_stopping"
+    },
+    {
+      "acc": 0.775,
+      "auc": 0.8645833333333334,
+      "balanced_acc": 0.7708333333333333,
+      "sen": 0.75,
+      "spec": 0.7916666666666666,
+      "pre": 0.7058823529411765,
+      "f1": 0.7272727272727272,
+      "tp": 12,
+      "tn": 19,
+      "fp": 5,
+      "fn": 4,
+      "threshold": 0.5,
+      "auc_reason": null,
+      "fold": "Set_1",
+      "best_epoch": 31,
+      "epochs_trained": 52,
+      "stopping_reason": "early_stopping"
+    },
+    {
+      "acc": 0.875,
+      "auc": 0.9575,
+      "balanced_acc": 0.875,
+      "sen": 0.9,
+      "spec": 0.85,
+      "pre": 0.8571428571428571,
+      "f1": 0.8780487804878048,
+      "tp": 18,
+      "tn": 17,
+      "fp": 3,
+      "fn": 2,
+      "threshold": 0.5,
+      "auc_reason": null,
+      "fold": "Set_2",
+      "best_epoch": 12,
+      "epochs_trained": 33,
+      "stopping_reason": "early_stopping"
+    },
+    {
+      "acc": 0.775,
+      "auc": 0.8434343434343434,
+      "balanced_acc": 0.7904040404040404,
+      "sen": 0.6363636363636364,
+      "spec": 0.9444444444444444,
+      "pre": 0.9333333333333333,
+      "f1": 0.7567567567567568,
+      "tp": 14,
+      "tn": 17,
+      "fp": 1,
+      "fn": 8,
+      "threshold": 0.5,
+      "auc_reason": null,
+      "fold": "Set_3",
+      "best_epoch": 9,
+      "epochs_trained": 30,
+      "stopping_reason": "early_stopping"
+    }
+  ],
+  "mean_metrics": {
+    "acc": {
+      "mean": 0.8375,
+      "std": 0.07500000000000001
+    },
+    "auc": {
+      "mean": 0.9062784090909091,
+      "std": 0.06097613876972314
+    },
+    "balanced_acc": {
+      "mean": 0.8394886363636365,
+      "std": 0.07105264988819017
+    },
+    "sen": {
+      "mean": 0.8102272727272727,
+      "std": 0.14461762063575487
+    },
+    "spec": {
+      "mean": 0.8687499999999999,
+      "std": 0.06436517314824293
+    },
+    "f1": {
+      "mean": 0.8238528994626555,
+      "std": 0.09789923552110524
+    }
+  },
+  "env": {
+    "python": "3.12.3",
+    "torch": "2.11.0+cu128",
+    "numpy": "2.5.3",
+    "sklearn": "1.9.0",
+    "device": "cpu",
+    "cuda_available": false,
+    "cudnn_deterministic": true,
+    "cudnn_benchmark": false,
+    "threads_omp": "1",
+    "threads_mkl": "1",
+    "threads_openblas": "1",
+    "n_cpus": 128
+  }
+}
