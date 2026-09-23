@@ -40,9 +40,9 @@ số liệu trong index này lấy từ chính các tables đã sinh.
 ## Figure 4 — Latent distribution
 
 ### Slide: "Learned latent space vs the HC normative bank" — Figure_4
-- **Kết luận**: (a–b) PCA (fit trên training-HC reference, PC1 giải thích 17.0% variance của reference): eval-HC nằm trong vùng mật độ HC reference, eval-SZ lệch rõ dọc PC1 (Welch p = 2.4e−13, d = −1.27) và PC2 (p = 9e−08, d = +0.89). (d) Heatmap subject × stimulus: SZ cao hơn HC một cách hệ thống (subject-mean RMS 1.12 vs 1.03), deviation cao rải rác theo subject, không tập trung ở một category. (c) Effective rank của train-HC covariance = 16.6 — không collapse. (e) Train-HC mean ‖z−μ‖ = 3.38 ± 0.19 — tập trung quanh bank nhưng không suy biến về 0.
-- **Caption (EN)**: "(a) Joint PCA of per-stimulus bank-centered encodings (z − μ_s). PCA is fit on the training-fold HC reference (re-encoded with the final encoder; grey density), then evaluation subjects (out-of-fold, seed 42) are projected. Points/ellipses: subject means over valid stimuli. PC1 explains 17.0% of reference variance; axes are not hand-crafted features. (b) Subject-mean PC1 distributions. (c) Effective rank (participation ratio) of the train-HC latent covariance — well above 1, i.e., no collapse (this suite has no λ_norm; see missing_artifacts.md). (d) Subject × stimulus RMS standardized residual sqrt(mean_k ((z_k−μ_k)/σ_k)²) heatmap for 60 evaluation subjects (30 HC with the 15 lowest/highest subject-mean deviation each, 30 SZ likewise), stimuli sorted by category; missing pairs left blank. (e) Train-HC per-subject mean ‖z−μ‖: concentrated around the bank but not zero."
-- **Speaker notes (VI)**: "Không gộp encoder của các fold/seed khác nhau vào chung một PCA — mỗi model một không gian; đây là seed 42. Ký hiệu: z trước comparator, d sau comparator, h sau pooling. Suite này đã bỏ λ_norm nên panel (c,e) là chẩn đoán single-model: rank hiệu dụng 16.6 chứng tỏ không collapse, khoảng cách train-HC tập trung (3.38 ± 0.19) chứng tỏ bank có ý nghĩa."
+- **Kết luận**: (a–b) PCA (fit trên training-HC reference, PC1 giải thích 17.0% variance của reference): eval-HC nằm trong vùng mật độ HC reference, eval-SZ lệch rõ dọc PC1 (Welch p = 2.4e−13, d = −1.27) và PC2 (p = 9e−08, d = +0.89). (c) Deviation theo category: SZ cao hơn HC ở cả 4 category (subject-mean RMS 1.02–1.03 vs 1.09–1.14, Welch p < 1e−6 mọi category) — gap khá đều, không tập trung ở một category. (d) Heatmap subject × stimulus: SZ cao hơn HC một cách hệ thống (subject-mean RMS 1.12 vs 1.03), deviation cao rải rác theo subject, không tập trung ở một category. (e) Train-HC mean ‖z−μ‖ = 3.38 ± 0.19 — tập trung quanh bank nhưng không suy biến về 0. Chẩn đoán không vẽ (lưu ở T05.01_norm_diagnostics.csv): effective rank của train-HC covariance = 16.6 — không collapse.
+- **Caption (EN)**: "(a) Joint PCA of per-stimulus bank-centered encodings (z − μ_s). PCA is fit on the training-fold HC reference (re-encoded with the final encoder; grey density), then evaluation subjects (out-of-fold, seed 42) are projected. Points/ellipses: subject means over valid stimuli. PC1 explains 17.0% of reference variance; axes are not hand-crafted features. (b) Subject-mean PC1 distributions. (c) Subject-mean RMS standardized residual by stimulus category (violins over subjects, n = 80 per group; median line): SZ is elevated in all four categories (Welch p < 1e−6 each; see Table T05.01_category_deviation). (d) Subject × stimulus RMS standardized residual sqrt(mean_k ((z_k−μ_k)/σ_k)²) heatmap for 60 evaluation subjects (30 HC with the 15 lowest/highest subject-mean deviation each, 30 SZ likewise), stimuli sorted by category; missing pairs left blank. (e) Train-HC per-subject mean ‖z−μ‖: concentrated around the bank but not zero."
+- **Speaker notes (VI)**: "Không gộp encoder của các fold/seed khác nhau vào chung một PCA — mỗi model một không gian; đây là seed 42. Ký hiệu: z trước comparator, d sau comparator, h sau pooling. Suite này đã bỏ λ_norm nên panel λ cũ bị loại; panel (c) thay vào đó cho thấy deviation SZ cao đều ở cả 4 category (Welch p < 1e−6) — abnormality không phải chỉ ở một loại stimulus, nên bank theo stimulus có ý nghĩa chứ không phải một số chuẩn toàn cục. Rank hiệu dụng 16.6 (không collapse) vẫn lưu ở bảng T05.01_norm_diagnostics.csv; panel (e) cho thấy khoảng cách train-HC tập trung (3.38 ± 0.19) — bank có ý nghĩa."
 - **Giới hạn**: PCA 2D chỉ giữ ~27.2% variance của reference (17.0 + 10.2); không suy distance 2D thành distance không gian gốc. Heatmap là mô tả (60/160 subject được chọn theo quy tắc min/max deviation).
 
 ---
@@ -57,10 +57,22 @@ số liệu trong index này lấy từ chính các tables đã sinh.
 
 ---
 
-## Bố cục slide gợi ý (5 slides chính)
+## Figure 6 — Gaze-level XAI
+
+### Slide: "Where do SZ look differently, and what matters?" — Figure_6
+- **Câu hỏi**: SZ nhìn khác HC ở đâu trên stimulus, và phần nào của input (stimulus, category) quan trọng với dự đoán?
+- **Kết luận**: (a) Trên 4 stimulus median-rule (đồng bộ Figure 2d): SZ có ít fixation hơn HC trên mọi stimulus (12.2–13.3 vs 13.9–15.4 fix/subject) và mật độ nhìn lệch rõ khỏi vùng HC tập trung (difference map SZ−HC). (b) Stimulus importance (LOO, Set_0 val): drop dương cho đa số stimulus, một số âm (nhiễu). (c) Category importance (leave-one-category-out, Set_0 val, base AUC 0.9621): social gây drop lớn nhất (+0.028), natural +0.010, synthetic +0.003, manipulated 0.000 — social đóng góp nhiều nhất dù không phải category đông stimulus nhất (22/100). Lưu ý: category-LOO gộp cả hiệu ứng nội dung lẫn số lượng stimulus; không tách được confound này trong thiết kế hiện tại.
+- **Caption (EN)**: "(a) Group fixation-density heatmaps (16 px bins, Gaussian-smoothed; fixations per viewing subject) for the four median-rule stimuli of T01.04, overlaid on the grayscale stimulus. Rows: HC (n = 80), SZ (n = 80), and the difference SZ − HC (RdBu, symmetric around 0). All HC/SZ panels share one color scale. (b) Per-stimulus leave-one-out AUC drop (mlp_attn EXP-PROP-003, seed 42, fold Set_0 val, n = 40): top 12 and bottom 12 stimuli, colored by category. (c) Leave-one-category-out AUC drop on the same model and fold: all stimuli of one category are masked from the subject representation; ΔAUC = base AUC (0.9621) − masked AUC."
+- **Speaker notes (VI)**: "Panel a bổ sung cho Figure 2d: không chỉ scanpath ngắn hơn, SZ còn nhìn lệch khỏi vùng HC tập trung — đỏ là SZ nhìn nhiều hơn, xanh là ít hơn. Panel b–c chuyển sang 'model quan tâm gì': social scenes đóng góp nhiều nhất cho dự đoán, phù hợp với tài liệu về xử lý social stimuli ở SZ; attention gần uniform nên LOO là tín hiệu quan trọng hơn attention. Thừa nhận confound: category-LOO gộp nội dung + số lượng stimulus; muốn tách thì phải design thêm (ví dụ subsample category về cùng kích thước)."
+- **Giới hạn**: Heatmap là mô tả nhóm (n=80/80), không có test pixel-wise; density chuẩn hoá theo n_viewed (một số exposure thiếu). Category-LOO chỉ trên 1 fold (Set_0), confound nội dung × số lượng stimulus. Stimulus LOO là hiệu ứng từng stimulus đơn lẻ, không mô hình hoá tương tác.
+
+---
+
+## Bố cục slide gợi ý (6 slides chính)
 
 1. EMS dataset (Figure_1)
 2. HC vs SZ gaze signatures: distributions + scanpaths (Figure_2)
 3. Feature discriminability (Figure_3)
-4. Latent space: PCA + heatmap + rank/distance diagnostics (Figure_4)
+4. Latent space: PCA + category deviation + heatmap + distance diagnostic (Figure_4)
 5. Importance (Figure_5)
+6. Gaze-level XAI: heatmaps + stimulus/category importance (Figure_6)

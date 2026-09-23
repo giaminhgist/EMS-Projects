@@ -116,6 +116,15 @@ def savefig(fig, outdir: Path, name: str, tight=True):
     print(f"  saved {outdir / name}.png/.svg")
 
 
+def panel_label(ax, letter, x=0.02, y=0.96, fontsize=11):
+    """Nature-style bold lowercase panel label at the top-left of the axes.
+
+    Used by Figures 5-6 (post-restyle); Figures 1-4 keep their own titles.
+    """
+    ax.text(x, y, letter, transform=ax.transAxes, fontweight="bold",
+            fontsize=fontsize, va="top", ha="left")
+
+
 # --------------------------------------------------------------------- #
 # Run-dir resolution (provenance-safe: config must match)
 # --------------------------------------------------------------------- #

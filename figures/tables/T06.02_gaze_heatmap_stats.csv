@@ -1,0 +1,9 @@
+stimulus,category,group,n_subjects,n_viewed,n_fixations,fix_per_subject
+soc_093.jpg,social,HC,80,80,1231,15.3875
+soc_093.jpg,social,SZ,80,78,1036,13.282051282051283
+ind_016.jpg,natural,HC,80,80,1135,14.1875
+ind_016.jpg,natural,SZ,80,79,993,12.569620253164556
+cat_013.jpg,synthetic,HC,80,78,1112,14.256410256410257
+cat_013.jpg,synthetic,SZ,80,78,1001,12.833333333333334
+low_033.jpg,manipulated,HC,80,80,1119,13.9875
+low_033.jpg,manipulated,SZ,80,77,942,12.233766233766234

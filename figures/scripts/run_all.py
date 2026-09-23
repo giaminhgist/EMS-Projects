@@ -41,7 +41,7 @@ def run(cmd):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--groups", default="01,02,05,06",
+    ap.add_argument("--groups", default="01,02,05,06,07",
                     help="comma-separated figure groups to regenerate")
     ap.add_argument("--force-cache", action="store_true",
                     help="rebuild fixation cache even if present")
@@ -64,6 +64,9 @@ def main():
         "02": "make_feature_figs.py",
         "05": "make_latent_figs.py",
         "06": "make_xai_figs.py",
+        # 07 depends on tables from 01 (T01.04) and 06 (T06.01); sorted
+        # group order guarantees 06 runs first.
+        "07": "make_gaze_xai_figs.py",
     }
     for g in sorted(groups):
         run([PY, SCRIPTS / scripts[g]])

@@ -1,8 +1,8 @@
 """Figure 4 — learned latent space vs the HC normative bank.
 
 One merged figure: (a) joint PCA of bank-centered encodings, (b) subject-mean
-PC1 distributions, (c) subject x stimulus deviation heatmap, (d) effective-rank
-diagnostic, (e) train-HC distance-to-bank diagnostic.
+PC1 distributions, (c) deviation by stimulus category, (d) subject x stimulus
+deviation heatmap, (e) train-HC distance-to-bank diagnostic.
 
 Notation follows the actual tensors (see cache/latent/*.npz exported by
 model_utils.export_run):
@@ -20,9 +20,11 @@ independently trained encoders into one PCA.
 ADAPTATION vs the reference suite: this project's protocol has NO
 lambda_norm (removed before the 10-seed runs), so the old panels
 "(c) effective rank lambda=0 vs 0.1" and "(e) lambda concentration"
-are replaced by single-model diagnostics: effective rank of the trained
-model's train-HC covariance (collapse check) and its train-HC distance
-distribution to the bank (concentration check).
+are dropped. Panel (c) now shows subject-mean RMS deviation by stimulus
+category (HC vs SZ); panel (e) is the remaining single-model
+concentration check; the effective rank (participation ratio) of the
+trained model's train-HC covariance is kept only as a printed/CSV
+diagnostic.
 """
 from __future__ import annotations
 
@@ -33,7 +35,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
-from matplotlib.patches import Ellipse
+from matplotlib.patches import Ellipse, Patch
 from scipy import stats
 from sklearn.decomposition import PCA
 
@@ -114,8 +116,8 @@ def subject_rms(r):
 # --------------------------------------------------------------------- #
 def fig_normative_latent():
     """One figure, five panels: (a) joint PCA, (b) subject-mean PC1,
-    (c) subject x stimulus deviation heatmap, (d) effective rank (no
-    collapse), (e) train-HC distance to the bank (concentrated, not 0)."""
+    (c) deviation by stimulus category, (d) subject x stimulus deviation
+    heatmap, (e) train-HC distance to the bank (concentrated, not 0)."""
     lat = load_latent(MAIN_ABL, 42)
     y = lat["label"]
 
@@ -159,7 +161,7 @@ def fig_normative_latent():
         return np.concatenate([bot, top])
     heat_rows = np.concatenate([pick(idx_hc), pick(idx_sz)])
 
-    # -- diagnostics (panels d, e): single model, no lambda_norm -------
+    # -- diagnostics (panel e + CSV): single model, no lambda_norm -----
     dists, zcs = [], []
     for p in lat["_per_fold"]:
         dist = np.sqrt(((p["ref_z"] - p["bank_mu"][None]) ** 2).sum(-1))
@@ -214,17 +216,28 @@ def fig_normative_latent():
     ax.set_title("(b) Subject-mean PC1 distributions", fontsize=9.5)
     ax.legend(fontsize=8)
 
-    # (c) effective rank (participation ratio) — collapse check
+    # (c) subject-mean RMS residual by stimulus category — HC vs SZ
     ax = fig.add_subplot(gs[0, 2])
-    ax.bar([0], [pr], color=LEARNED_COLOR, width=0.35)
-    ax.text(0, pr + 0.5, f"{pr:.1f}", ha="center", fontsize=9)
-    ax.set_xlim(-0.8, 0.8)
-    ax.set_xticks([0])
-    ax.set_xticklabels(["mlp_deepset (λ=0)"])
-    ax.set_ylabel("effective rank (participation ratio)")
-    ax.set_title("(c) Effective rank of train-HC latent covariance\n"
-                 "well above 1 — no collapse (λ_norm removed from suite)",
-                 fontsize=9.5)
+    cat_lab = ["social", "natural", "synthetic", "manipulated"]
+    cat_mean = {c: np.nanmean(r[:, cats == c], axis=1) for c in cat_lab}
+    pos = np.arange(4)
+    for gi, (grp, color) in enumerate([(y == 0, HC_COLOR), (y == 1, SZ_COLOR)]):
+        vp = ax.violinplot([cat_mean[c][grp] for c in cat_lab],
+                           positions=pos + (gi - 0.5) * 0.24, widths=0.22,
+                           showmedians=True, showextrema=False)
+        for b in vp["bodies"]:
+            b.set_facecolor(color)
+            b.set_alpha(0.55)
+            b.set_edgecolor("none")
+        vp["cmedians"].set_color("black")
+        vp["cmedians"].set_linewidth(1.2)
+    ax.set_xticks(pos)
+    ax.set_xticklabels(cat_lab, fontsize=8)
+    ax.set_ylabel("subject-mean RMS ‖(z−μ)/σ‖")
+    ax.set_title("(c) Deviation by stimulus category", fontsize=9.5)
+    ax.legend(handles=[Patch(facecolor=HC_COLOR, alpha=0.55, label="HC"),
+                       Patch(facecolor=SZ_COLOR, alpha=0.55, label="SZ")],
+              fontsize=7.5, loc="upper left")
 
     # (d) subject x stimulus deviation heatmap (horizontal, wide)
     gs_d = gs[1, 0:2].subgridspec(1, 2, width_ratios=[1, 0.06], wspace=0.03)
@@ -258,8 +271,7 @@ def fig_normative_latent():
     ax.hist(subj_dist, bins=22, color=LEARNED_COLOR, alpha=0.55, density=True)
     ax.set_xlabel("train-HC mean ‖z − μ‖ per subject")
     ax.set_ylabel("density")
-    ax.set_title("(e) Train-HC distance to bank — concentrated but not 0",
-                 fontsize=9.5)
+    ax.set_title("(e) Train HC distance to bank", fontsize=9.5)
 
     fig.suptitle("Learned latent space vs the HC normative bank "
                  "(mlp_deepset EXP-PROP-001, out-of-fold seed 42)", fontsize=11, y=0.985)
@@ -268,6 +280,16 @@ def fig_normative_latent():
                   "pc1_mean": subj_mean[:, 0], "pc2_mean": subj_mean[:, 1]}) \
         .to_csv(TAB / "T05.01_pca.csv", index=False)
     np.save(TAB / "T05.01_deviation_matrix.npy", r_sorted[heat_rows])
+    pd.DataFrame([{"category": c, "n_stimuli": int((cats == c).sum()),
+                   "hc_mean": float(cat_mean[c][y == 0].mean()),
+                   "hc_std": float(cat_mean[c][y == 0].std()),
+                   "sz_mean": float(cat_mean[c][y == 1].mean()),
+                   "sz_std": float(cat_mean[c][y == 1].std()),
+                   "welch_p": float(stats.ttest_ind(cat_mean[c][y == 0],
+                                                    cat_mean[c][y == 1],
+                                                    equal_var=False).pvalue)}
+                  for c in cat_lab]) \
+        .to_csv(TAB / "T05.01_category_deviation.csv", index=False)
     pd.DataFrame({"ablation": [MAIN_ABL],
                   "effective_rank": [pr],
                   "train_hc_mean_dist": [subj_dist.mean()],

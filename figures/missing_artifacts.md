@@ -9,10 +9,11 @@ không có chỗ nào bịa dữ liệu để lấp chỗ trống.
 - **Lý do**: Suite của repo này không có `lambda_norm` (đã bỏ trước khi chạy
   10 seeds; xem `EXPERIMENTS_RESULTS.md`). Vì vậy Figure_4 không thể tái lập
   đúng 2 panel so sánh λ=0 vs λ=0.1 của reference suite.
-- **Cách xử lý trong bộ này**: panel (c) thành *effective rank* của train-HC
-  covariance của model đã train (single bar — kiểm tra collapse), panel (e)
-  thành phân phối train-HC ‖z−μ‖ (kiểm tra concentration). Cả hai đều là
-  chẩn đoán single-model, title và caption ghi rõ không có λ_norm.
+- **Cách xử lý trong bộ này**: các panel so sánh λ bị loại khỏi Figure_4.
+  Panel còn lại duy nhất theo hướng đó là phân phối train-HC ‖z−μ‖ (kiểm tra
+  concentration); *effective rank* (participation ratio) của train-HC
+  covariance vẫn được tính và lưu ở `tables/T05.01_norm_diagnostics.csv`
+  như chẩn đoán không vẽ.
 - **Lệnh bổ sung** (nếu muốn đúng nguyên mẫu): train thêm một ablation
   learned + λ_norm=0.1 (cần sửa `src/proposal/model.py` + trainer, chưa có
   sẵn trong code) rồi export latent như hiện tại.

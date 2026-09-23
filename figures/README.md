@@ -8,19 +8,22 @@ không có số liệu nào bịa.
 Bộ này được port từ reference suite (EMS-Project/presentation) sang repo
 EMS-Projects: Figures 1–3 dùng cùng dataset + cùng cleaning rules nên các
 tables T01/T02 khớp chính xác với reference (đã đối chiếu, diff = 0);
-Figures 4–5 dùng chính các model của repo này (EXP-PROP-001 mlp_deepset,
-EXP-PROP-003 mlp_attn, EXP-PROP-004 z_mean, seed 42).
+Figures 4–6 dùng chính các model của repo này (EXP-PROP-001 mlp_deepset,
+EXP-PROP-003 mlp_attn, EXP-PROP-004 z_mean, seed 42). Figure 6 là figure
+XAI bổ sung (gaze heatmap + category/stimulus importance), không có trong
+reference suite.
 
 ## Nội dung
 
 ```
 figures/
-├── figure/                  # 5 figures — PNG 300 dpi + SVG, đặt tên Figure_1..Figure_5
+├── figure/                  # 6 figures — PNG 300 dpi + SVG, đặt tên Figure_1..Figure_6
 │   ├── Figure_1.png/.svg    # dataset overview (subjects, stimuli, official folds)
 │   ├── Figure_2.png/.svg    # gaze signatures: HC vs SZ distributions + scanpaths
 │   ├── Figure_3.png/.svg    # effect sizes của 45 features + rainclouds + category profiles
-│   ├── Figure_4.png/.svg    # normative latent: PCA + heatmap + rank/distance diagnostics
-│   └── Figure_5.png/.svg    # feature + stimulus importance
+│   ├── Figure_4.png/.svg    # normative latent: PCA + category deviation + heatmap + distance diagnostic
+│   ├── Figure_5.png/.svg    # feature + stimulus importance (Nature style)
+│   └── Figure_6.png/.svg    # gaze heatmaps HC/SZ + category & stimulus importance
 ├── scripts/                 # code tái lập (entry point: run_all.py)
 ├── tables/                  # CSV/JSON nguồn cho từng figure
 ├── cache/                   # intermediate tensors (fixations + latent exports)

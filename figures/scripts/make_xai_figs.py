@@ -17,14 +17,16 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from matplotlib.patches import Patch
 import torch
 from sklearn.metrics import roc_auc_score
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import (FIG, TAB, CACHE, HC_COLOR, SZ_COLOR, LEARNED_COLOR,  # noqa: E402
-                    HARD_COLOR, FEATURE_NAMES, FEATURE_GROUPS, GROUP_LABELS,
-                    feature_group_of, savefig, image_list, category_of,
-                    make_datasets, load_checkpoint_model)
+                    HARD_COLOR, CAT_COLORS, FEATURE_NAMES, FEATURE_GROUPS,
+                    GROUP_LABELS, feature_group_of, savefig, panel_label,
+                    image_list, category_of, make_datasets,
+                    load_checkpoint_model)
 from model_utils import forward_full, batch_tensors  # noqa: E402
 from make_latent_figs import load_latent  # noqa: E402
 
@@ -33,6 +35,10 @@ OUT = FIG
 LEARNED_ABL = "mlp_deepset"  # EXP-PROP-001 (main)
 ATTN_ABL = "mlp_attn"        # EXP-PROP-003 (attention pooling)
 HARD_ABL = "z_mean"          # EXP-PROP-004 (hard deviation)
+
+# feature-family colors (Okabe-Ito subset; distinct from HC/SZ usage)
+FAM_COLORS = {"spa_pos": "#0072B2", "spa_center": "#56B4E9", "geo": "#009E73",
+              "tem": "#E69F00", "pup": "#D55E00"}
 
 
 def model_on(ds, model, device="cpu"):
@@ -81,7 +87,9 @@ def permute_importance(ablation, seed, fold, n_repeats=10, families=False):
 def fig_importance():
     """Figure_5: (a) feature-family permutation importance, (b) top-15 features,
     (c) leave-one-stimulus-out AUC drop vs attention, (d) top-30 stimuli by
-    attention, (e) attention by category x group."""
+    attention, (e) attention by category x group. Nature-style: bold lowercase
+    panel labels, no boxed titles, thin spines, Okabe-Ito colors."""
+    plt.rcParams["font.sans-serif"] = ["Helvetica", "Arial", "DejaVu Sans"]
     # --- permutation importance (panels a, b) -------------------------
     fam_learned, _ = permute_importance(LEARNED_ABL, 42, "Set_1",
                                         n_repeats=8, families=True)
@@ -95,8 +103,7 @@ def fig_importance():
     y = lat["label"]
     imgs = image_list()
     cats = np.array([category_of(im) for im in imgs])
-    cat_color = {c: plt.cm.tab10(i) for i, c in
-                 enumerate(["social", "natural", "synthetic", "manipulated"])}
+    cat_color = CAT_COLORS
     mean_attn = attn.mean(0)
     model, _, _ = load_checkpoint_model(ATTN_ABL, 42, "Set_0")
     train_ds, val_ds, tr, va = make_datasets(ATTN_ABL, 42, "Set_0")
@@ -131,15 +138,15 @@ def fig_importance():
         vals = [fam[g]["mean"] for g in groups]
         errs = [fam[g]["std"] for g in groups]
         ax.bar(x + offset, vals, width=0.36, color=color, yerr=errs,
-               capsize=2.5, label=lab)
-    ax.axhline(0, color="#555555", lw=0.8)
+               capsize=2, label=lab, error_kw={"lw": 0.8})
+    ax.axhline(0, color="#333333", lw=0.7)
     ax.set_xticks(x)
     ax.set_xticklabels([g.replace("spa_", "").replace("_", "\n")
                         for g in groups], fontsize=8)
-    ax.set_ylabel("ΔAUC when feature family is permuted\n(across subjects)")
-    ax.set_title("(a) Feature-family permutation importance\n"
-                 "(ranked on fold Set_1 val)", fontsize=9.5)
-    ax.legend(fontsize=7.5)
+    ax.set_ylabel("ΔAUC when feature family is permuted\n"
+                  "(across subjects, fold Set_1 val)")
+    panel_label(ax, "a")
+    ax.legend(fontsize=7.5, loc="upper right")
 
     # (b) top-15 features, learned model
     ax = fig.add_subplot(gs[0, 1])
@@ -148,22 +155,27 @@ def fig_importance():
     names = [feats[i] for i, _ in rows]
     vals = [v["mean"] for _, v in rows]
     errs = [v["std"] for _, v in rows]
-    colors = [plt.cm.tab10(list(FEATURE_GROUPS).index(feature_group_of(n)))
-              for n in names]
-    ax.barh(range(15)[::-1], vals, xerr=errs, color=colors, capsize=2.5)
+    colors = [FAM_COLORS[feature_group_of(n)] for n in names]
+    ax.barh(range(15)[::-1], vals, xerr=errs, color=colors, capsize=2,
+            error_kw={"lw": 0.8})
     ax.set_yticks(range(15)[::-1])
     ax.set_yticklabels(names, fontsize=7.5)
-    ax.set_xlabel("ΔAUC (permuted, 10 repeats ± SD)")
-    ax.set_title("(b) Top-15 features — mlp_deepset\n(fold Set_1 val, n=40)",
-                 fontsize=9.5)
+    ax.set_xlabel("ΔAUC ± SD over 10 repeats (Set_1 val, n=40)")
+    panel_label(ax, "b")
+    fam_handles = [Patch(color=FAM_COLORS[g], label=g.replace("spa_", ""))
+                   for g in FEATURE_GROUPS]
+    ax.legend(handles=fam_handles, fontsize=6.5, loc="lower right",
+              ncol=5, columnspacing=0.8, handlelength=1.0, handletextpad=0.3)
 
     # (c) leave-one-stimulus-out AUC change vs attention (Set_0 val)
     ax = fig.add_subplot(gs[0, 2])
-    ax.scatter(attn0, dloos, c=[cat_color[c] for c in cats], s=26, alpha=0.85)
+    ax.scatter(attn0, dloos, c=[cat_color[c] for c in cats], s=18, alpha=0.85,
+               linewidths=0)
     ax.set_xlabel("mean attention (fold Set_0 model)")
     ax.set_ylabel("AUC drop when stimulus removed")
-    ax.set_title(f"(c) Leave-one-stimulus-out vs attention\n"
-                 f"(Set_0 val, n=40; Pearson r = {r:.2f})", fontsize=9.5)
+    ax.text(0.97, 0.96, f"r = {r:.2f}", transform=ax.transAxes,
+            ha="right", va="top", fontsize=8)
+    panel_label(ax, "c")
 
     # (d) top-30 stimuli by mean attention, colored by category
     ax = fig.add_subplot(gs[1, 0:2])
@@ -172,14 +184,12 @@ def fig_importance():
     for i, s in enumerate(top30):
         ax.bar(i, mean_attn[s], color=cat_color[cats[s]])
     ax.set_xticks(range(30))
-    ax.set_xticklabels([imgs[s][:6] for s in top30], rotation=90, fontsize=6)
-    ax.set_ylabel("mean attention weight")
-    ax.set_title("(d) Top-30 stimuli by mean attention\n"
-                 "(mlp_attn, out-of-fold)", fontsize=9.5)
-    from matplotlib.patches import Patch
+    ax.set_xticklabels([imgs[s][:6] for s in top30], rotation=90, fontsize=7)
+    ax.set_ylabel("mean attention weight (out-of-fold)")
+    panel_label(ax, "d")
     ax.legend(handles=[Patch(color=cat_color[c], label=c)
                        for c in ["social", "natural", "synthetic",
-                                 "manipulated"]], fontsize=7)
+                                 "manipulated"]], fontsize=7, loc="upper right")
 
     # (e) attention by category and group
     ax = fig.add_subplot(gs[1, 2])
@@ -191,8 +201,13 @@ def fig_importance():
     ax.set_xticks(x[:4])
     ax.set_xticklabels(cat_names, fontsize=8.5)
     ax.set_ylabel("mean attention")
-    ax.set_title("(e) Attention by category × group", fontsize=9.5)
+    panel_label(ax, "e")
     ax.legend(fontsize=8)
+
+    # thin spines on all panels (Nature style)
+    for ax in fig.axes:
+        for s in ax.spines.values():
+            s.set_linewidth(0.6)
 
     savefig(fig, OUT, "Figure_5")
     pd.DataFrame({f"{LEARNED_ABL}_{k}": v for k, v in imp_l.items()}).T \
