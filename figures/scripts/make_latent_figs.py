@@ -41,7 +41,8 @@ from sklearn.decomposition import PCA
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import (FIG, TAB, CACHE, FOLDS, HC_COLOR, SZ_COLOR, REF_COLOR,  # noqa: E402
-                    LEARNED_COLOR, HARD_COLOR, savefig, image_list, category_of)
+                    LEARNED_COLOR, HARD_COLOR, savefig, panel_label,
+                    image_list, category_of)
 
 OUT = FIG
 LAT = CACHE / "latent"
@@ -203,7 +204,8 @@ def fig_normative_latent():
         ax.add_patch(Ellipse(mean, w, h, angle=ang, fill=False, ec=color, lw=2))
     ax.set_xlabel("PC1")
     ax.set_ylabel("PC2")
-    ax.set_title("(a) Joint PCA (z − μ_s, per stimulus)", fontsize=9.5)
+    panel_label(ax, "a", outside=True,
+                title="Joint PCA (z − μ_s, per stimulus)")
     ax.legend(fontsize=7.5)
 
     # (b) HC/SZ separation along PC1
@@ -213,7 +215,7 @@ def fig_normative_latent():
                 density=True)
     ax.set_xlabel("PC1 (subject mean)")
     ax.set_ylabel("density")
-    ax.set_title("(b) Subject-mean PC1 distributions", fontsize=9.5)
+    panel_label(ax, "b", outside=True, title="PC1 distributions")
     ax.legend(fontsize=8)
 
     # (c) subject-mean RMS residual by stimulus category — HC vs SZ
@@ -234,7 +236,7 @@ def fig_normative_latent():
     ax.set_xticks(pos)
     ax.set_xticklabels(cat_lab, fontsize=8)
     ax.set_ylabel("subject-mean RMS ‖(z−μ)/σ‖")
-    ax.set_title("(c) Deviation by stimulus category", fontsize=9.5)
+    panel_label(ax, "c", outside=True, title="Deviation by stimulus category")
     ax.legend(handles=[Patch(facecolor=HC_COLOR, alpha=0.55, label="HC"),
                        Patch(facecolor=SZ_COLOR, alpha=0.55, label="SZ")],
               fontsize=7.5, loc="upper left")
@@ -260,9 +262,7 @@ def fig_normative_latent():
     ax.set_xticklabels(["social", "natural", "synthetic", "manipulated"],
                        rotation=0, fontsize=8)
     ax.set_yticks([])
-    ax.set_title("(d) Subject × stimulus deviation (60 evaluation subjects,\n"
-                 "top 15 / bottom 15 per group; missing pairs blank)",
-                 fontsize=9.5)
+    panel_label(ax, "d", outside=True, title="Subject × stimulus deviation")
     cax = fig.add_subplot(gs_d[1])
     plt.colorbar(cm, cax=cax, label="RMS ‖(z−μ)/σ‖")
 
@@ -271,10 +271,8 @@ def fig_normative_latent():
     ax.hist(subj_dist, bins=22, color=LEARNED_COLOR, alpha=0.55, density=True)
     ax.set_xlabel("train-HC mean ‖z − μ‖ per subject")
     ax.set_ylabel("density")
-    ax.set_title("(e) Train HC distance to bank", fontsize=9.5)
+    panel_label(ax, "e", outside=True, title="Train HC distance to bank")
 
-    fig.suptitle("Learned latent space vs the HC normative bank "
-                 "(mlp_deepset EXP-PROP-001, out-of-fold seed 42)", fontsize=11, y=0.985)
     savefig(fig, OUT, "Figure_4")
     pd.DataFrame({"subject_id": lat["subject_id"], "label": y,
                   "pc1_mean": subj_mean[:, 0], "pc2_mean": subj_mean[:, 1]}) \

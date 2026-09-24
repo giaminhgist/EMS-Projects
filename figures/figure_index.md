@@ -51,28 +51,16 @@ số liệu trong index này lấy từ chính các tables đã sinh.
 
 ### Slide: "What drives the prediction?" — Figure_5
 - **Kết luận**: Permutation (hoán đổi cả trajectory feature giữa subjects, giữ stimulus index; bank đóng băng; fold Set_1 val): cả learned (mlp_deepset) lẫn hard (z_mean) đều dựa nhiều vào pupil (ΔAUC 0.266 / 0.166), scanpath geometry (0.088 / 0.141) và spatial center (0.062 / 0.048); top-15 feature gồm toàn bộ 6 feature pupil trước tiên, rồi spa_entropy, spa_center_frac, geo_scanpath_len. Attention (mlp_attn) khá đều giữa các stimuli (0.0084–0.0138) và giữa categories/nhóm; leave-one-stimulus-out gần như không đổi AUC (drop trung bình 0.0037, max 0.0126; Pearson r = 0.34 giữa attention và AUC drop) — không có stimulus "nòng cốt", model dựa vào toàn bộ tập stimulus.
-- **Caption (EN)**: "(a) Feature-family permutation importance of P(SZ) through the full pipeline (mlp_deepset vs z_mean, fold Set_1 validation, n=40; 8 repeats; the whole per-stimulus trajectory of a feature is swapped between subjects so stimulus structure is preserved; bank and weights frozen). (b) Top-15 individual features, mlp_deepset (10 repeats ± SD). ΔAUC = baseline AUC − permuted AUC. (c) Leave-one-stimulus-out AUC drop vs mean attention (mlp_attn Set_0 model, n=40 val; Pearson r). (d) Top-30 stimuli by mean attention weight (mlp_attn, pooled out-of-fold), colored by category. (e) Attention by category × group (mlp_attn)."
+- **Caption (EN)**: "(a) Feature-family permutation importance of P(SZ) through the full pipeline (mlp_deepset vs z_mean, fold Set_1 validation, n=40; 8 repeats; the whole per-stimulus trajectory of a feature is swapped between subjects so stimulus structure is preserved; bank and weights frozen). (b) Top-15 individual features, mlp_deepset (10 repeats, error bars ± SEM). ΔAUC = baseline AUC − permuted AUC. (c) Leave-one-stimulus-out AUC drop vs mean attention (mlp_attn Set_0 model, n=40 val; Pearson r). (d) Top-30 stimuli by mean attention weight (mlp_attn, pooled out-of-fold), colored by category. (e) Attention by category × group (mlp_attn)."
 - **Speaker notes (VI)**: "Importance đo qua toàn bộ pipeline (encoder+comparator+pooling+head) — không đặt tên một latent dimension là một hand-crafted feature. Attention đơn thuần chưa đủ để kết luận importance; panel c cho thấy tín hiệu nằm ở tổng hợp toàn bộ stimuli. Lưu ý panel c–e dùng mlp_attn vì chỉ config này có attention pooling; panel a–b là model chính mlp_deepset."
 - **Giới hạn**: Chỉ tính trên valid exposures; same stimulus set khi so sánh; permutation trên Set_1 val (n=40) nên std lớn ở một số feature.
 
 ---
 
-## Figure 6 — Gaze-level XAI
-
-### Slide: "Where do SZ look differently, and what matters?" — Figure_6
-- **Câu hỏi**: SZ nhìn khác HC ở đâu trên stimulus, và phần nào của input (stimulus, category) quan trọng với dự đoán?
-- **Kết luận**: (a) Trên 4 stimulus median-rule (đồng bộ Figure 2d): SZ có ít fixation hơn HC trên mọi stimulus (12.2–13.3 vs 13.9–15.4 fix/subject) và mật độ nhìn lệch rõ khỏi vùng HC tập trung (difference map SZ−HC). (b) Stimulus importance (LOO, Set_0 val): drop dương cho đa số stimulus, một số âm (nhiễu). (c) Category importance (leave-one-category-out, Set_0 val, base AUC 0.9621): social gây drop lớn nhất (+0.028), natural +0.010, synthetic +0.003, manipulated 0.000 — social đóng góp nhiều nhất dù không phải category đông stimulus nhất (22/100). Lưu ý: category-LOO gộp cả hiệu ứng nội dung lẫn số lượng stimulus; không tách được confound này trong thiết kế hiện tại.
-- **Caption (EN)**: "(a) Group fixation-density heatmaps (16 px bins, Gaussian-smoothed; fixations per viewing subject) for the four median-rule stimuli of T01.04, overlaid on the grayscale stimulus. Rows: HC (n = 80), SZ (n = 80), and the difference SZ − HC (RdBu, symmetric around 0). All HC/SZ panels share one color scale. (b) Per-stimulus leave-one-out AUC drop (mlp_attn EXP-PROP-003, seed 42, fold Set_0 val, n = 40): top 12 and bottom 12 stimuli, colored by category. (c) Leave-one-category-out AUC drop on the same model and fold: all stimuli of one category are masked from the subject representation; ΔAUC = base AUC (0.9621) − masked AUC."
-- **Speaker notes (VI)**: "Panel a bổ sung cho Figure 2d: không chỉ scanpath ngắn hơn, SZ còn nhìn lệch khỏi vùng HC tập trung — đỏ là SZ nhìn nhiều hơn, xanh là ít hơn. Panel b–c chuyển sang 'model quan tâm gì': social scenes đóng góp nhiều nhất cho dự đoán, phù hợp với tài liệu về xử lý social stimuli ở SZ; attention gần uniform nên LOO là tín hiệu quan trọng hơn attention. Thừa nhận confound: category-LOO gộp nội dung + số lượng stimulus; muốn tách thì phải design thêm (ví dụ subsample category về cùng kích thước)."
-- **Giới hạn**: Heatmap là mô tả nhóm (n=80/80), không có test pixel-wise; density chuẩn hoá theo n_viewed (một số exposure thiếu). Category-LOO chỉ trên 1 fold (Set_0), confound nội dung × số lượng stimulus. Stimulus LOO là hiệu ứng từng stimulus đơn lẻ, không mô hình hoá tương tác.
-
----
-
-## Bố cục slide gợi ý (6 slides chính)
+## Bố cục slide gợi ý (5 slides chính)
 
 1. EMS dataset (Figure_1)
 2. HC vs SZ gaze signatures: distributions + scanpaths (Figure_2)
 3. Feature discriminability (Figure_3)
 4. Latent space: PCA + category deviation + heatmap + distance diagnostic (Figure_4)
 5. Importance (Figure_5)
-6. Gaze-level XAI: heatmaps + stimulus/category importance (Figure_6)

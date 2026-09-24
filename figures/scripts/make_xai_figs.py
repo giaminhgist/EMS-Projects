@@ -40,6 +40,9 @@ HARD_ABL = "z_mean"          # EXP-PROP-004 (hard deviation)
 FAM_COLORS = {"spa_pos": "#0072B2", "spa_center": "#56B4E9", "geo": "#009E73",
               "tem": "#E69F00", "pup": "#D55E00"}
 
+# per-feature permutation repeats (panel b); error bars show SEM = SD / sqrt(N)
+N_IMP_REPEATS = 10
+
 
 def model_on(ds, model, device="cpu"):
     D, mask = batch_tensors(ds)
@@ -95,7 +98,8 @@ def fig_importance():
                                         n_repeats=8, families=True)
     fam_hard, _ = permute_importance(HARD_ABL, 42, "Set_1",
                                      n_repeats=8, families=True)
-    imp_l, _ = permute_importance(LEARNED_ABL, 42, "Set_1", n_repeats=10)
+    imp_l, _ = permute_importance(LEARNED_ABL, 42, "Set_1",
+                                  n_repeats=N_IMP_REPEATS)
 
     # --- stimulus importance (panels c, d, e) -------------------------
     lat = load_latent(ATTN_ABL, 42)
@@ -143,10 +147,12 @@ def fig_importance():
     ax.set_xticks(x)
     ax.set_xticklabels([g.replace("spa_", "").replace("_", "\n")
                         for g in groups], fontsize=8)
-    ax.set_ylabel("ΔAUC when feature family is permuted\n"
-                  "(across subjects, fold Set_1 val)")
-    panel_label(ax, "a")
-    ax.legend(fontsize=7.5, loc="upper right")
+    ax.set_ylabel("ΔAUC")
+    panel_label(ax, "a", outside=True, title="Feature-family importance")
+    # legend below the axes: inside placement overlaps bars or their
+    # error caps (upper right hits pup, lower right hits the tem cap)
+    ax.legend(fontsize=7.5, loc="upper center",
+              bbox_to_anchor=(0.5, -0.09), ncol=2)
 
     # (b) top-15 features, learned model
     ax = fig.add_subplot(gs[0, 1])
@@ -154,14 +160,14 @@ def fig_importance():
     rows = sorted(imp_l.items(), key=lambda kv: -kv[1]["mean"])[:15]
     names = [feats[i] for i, _ in rows]
     vals = [v["mean"] for _, v in rows]
-    errs = [v["std"] for _, v in rows]
+    errs = [v["std"] / np.sqrt(N_IMP_REPEATS) for _, v in rows]  # SEM
     colors = [FAM_COLORS[feature_group_of(n)] for n in names]
     ax.barh(range(15)[::-1], vals, xerr=errs, color=colors, capsize=2,
             error_kw={"lw": 0.8})
     ax.set_yticks(range(15)[::-1])
     ax.set_yticklabels(names, fontsize=7.5)
-    ax.set_xlabel("ΔAUC ± SD over 10 repeats (Set_1 val, n=40)")
-    panel_label(ax, "b")
+    ax.set_xlabel("ΔAUC ± SEM over 10 repeats (Set_1 val, n=40)")
+    panel_label(ax, "b", outside=True, title="Top-15 features")
     fam_handles = [Patch(color=FAM_COLORS[g], label=g.replace("spa_", ""))
                    for g in FEATURE_GROUPS]
     ax.legend(handles=fam_handles, fontsize=6.5, loc="lower right",
@@ -175,7 +181,7 @@ def fig_importance():
     ax.set_ylabel("AUC drop when stimulus removed")
     ax.text(0.97, 0.96, f"r = {r:.2f}", transform=ax.transAxes,
             ha="right", va="top", fontsize=8)
-    panel_label(ax, "c")
+    panel_label(ax, "c", outside=True, title="Stimulus LOO vs attention")
 
     # (d) top-30 stimuli by mean attention, colored by category
     ax = fig.add_subplot(gs[1, 0:2])
@@ -186,7 +192,7 @@ def fig_importance():
     ax.set_xticks(range(30))
     ax.set_xticklabels([imgs[s][:6] for s in top30], rotation=90, fontsize=7)
     ax.set_ylabel("mean attention weight (out-of-fold)")
-    panel_label(ax, "d")
+    panel_label(ax, "d", outside=True, title="Top-30 stimuli by attention")
     ax.legend(handles=[Patch(color=cat_color[c], label=c)
                        for c in ["social", "natural", "synthetic",
                                  "manipulated"]], fontsize=7, loc="upper right")
@@ -201,7 +207,7 @@ def fig_importance():
     ax.set_xticks(x[:4])
     ax.set_xticklabels(cat_names, fontsize=8.5)
     ax.set_ylabel("mean attention")
-    panel_label(ax, "e")
+    panel_label(ax, "e", outside=True, title="Attention by category × group")
     ax.legend(fontsize=8)
 
     # thin spines on all panels (Nature style)

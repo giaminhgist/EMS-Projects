@@ -22,7 +22,8 @@ from scipy import stats
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import (FIG, TAB, CAT_COLORS, HC_COLOR, SZ_COLOR, savefig,  # noqa: E402
-                    load_metadata, image_list, category_of, PROCESSED, RAW)
+                    panel_label, load_metadata, image_list, category_of,
+                    PROCESSED, RAW)
 from rawdata import load_cleaned, load_drop_log, labels_series  # noqa: E402
 
 IMG_ROOT = RAW / "Images"
@@ -98,7 +99,7 @@ def raincloud(ax, hc, sz, title, unit, letter):
         ax.scatter(pos + rng.normal(0, 0.045, len(data)), data, s=7,
                    color=color, alpha=0.5, lw=0, zorder=3)
     p, d = welch_d(np.asarray(hc), np.asarray(sz))
-    ax.set_title(f"({letter}) {title}\n({unit})", fontsize=9.5)
+    panel_label(ax, letter, outside=True, title=f"{title} ({unit})")
     ax.set_xticks([-0.35, 0.35])
     ax.set_xticklabels(["HC", "SZ"])
 
@@ -127,7 +128,7 @@ def fig_dataset_overview():
     ax.set_xlim(0, 90)
     for i, v in enumerate([n_sz, n_hc]):
         ax.text(v + 1, i, str(v), va="center", fontweight="bold")
-    ax.set_title("(a) Subjects — EMS dataset", fontsize=10.5)
+    panel_label(ax, "a", outside=True, title="Subjects — EMS dataset")
     ax.set_xlabel("number of subjects")
     # example stimulus thumbnails (2x2) below (a)
     ax_ex = fig.add_subplot(gs[1, 0])
@@ -158,7 +159,7 @@ def fig_dataset_overview():
     axb.set_xticks(range(4))
     axb.set_xticklabels([f"{c}\n(n={v})" for c, v in counts.items()], fontsize=9)
     axb.set_ylim(0, 36)
-    axb.set_title("(b) 100 stimuli, 4 categories", fontsize=10.5)
+    panel_label(axb, "b", outside=True, title="100 stimuli, 4 categories")
     axb.set_ylabel("number of stimuli")
     for i, v in enumerate(counts.values):
         axb.text(i, v + 0.5, str(v), ha="center", fontweight="bold")
@@ -177,7 +178,7 @@ def fig_dataset_overview():
     ax.set_xticks(x)
     ax.set_xticklabels(["Set_0", "Set_1", "Set_2", "Set_3"])
     ax.set_ylim(0, 26)
-    ax.set_title("(c) Official 4-fold CV split (40/fold)")
+    panel_label(ax, "c", outside=True, title="Official 4-fold split")
     ax.set_ylabel("subjects per fold")
     ax.legend(loc="upper right")
     savefig(fig, OUT, "Figure_1")
@@ -213,11 +214,11 @@ def fig_gaze_signatures():
     gs = fig.add_gridspec(2, 4, top=0.62, bottom=0.03, left=0.08,
                           right=0.96, hspace=0.035, wspace=0.08)
     raincloud(axes[0], hc.n_fix, sz.n_fix, "Fixations per subject",
-              "count, total over stimuli", "a")
+              "count", "a")
     raincloud(axes[1], hc.dur_mean, sz.dur_mean, "Mean fixation duration",
-              "ms per subject", "b")
+              "ms", "b")
     raincloud(axes[2], hc.pup_mean, sz.pup_mean, "Mean pupil size",
-              "a.u. per subject", "c")
+              "a.u.", "c")
     # bottom rows: scanpaths of HC (top) and SZ (bottom) on the same stimuli
     for ci, cat in enumerate(CAT_ORDER):
         stim = picks[cat]
@@ -250,11 +251,10 @@ def fig_gaze_signatures():
             if gi == 1:
                 ax.set_xlabel(f"{stim} ({cat})", fontsize=9)
     # single block label (d) for the scanpath section (no per-cell letters)
-    fig.text(0.52, 0.632, "(d) Scanpaths — HC (top) / SZ (bottom), same stimuli",
-             va="center", ha="center", fontsize=9.5, color="#333333")
-    fig.suptitle("HC vs SZ gaze signatures — subject-level distributions (top) and "
-                 "scanpaths on the same representative stimuli (bottom)",
-                 fontsize=10.5, y=1.0)
+    fig.text(0.08, 0.628, "d", fontweight="bold", fontsize=11,
+             ha="left", va="bottom")
+    fig.text(0.091, 0.628, "Scanpaths — HC (top) / SZ (bottom), same stimuli",
+             fontsize=10, color="#333333", ha="left", va="bottom")
     savefig(fig, OUT, "Figure_2")
     s[["n_fix", "dur_mean", "pup_mean", "dispersion", "n_stim", "label"]] \
         .to_csv(TAB / "T01.03_subject_stats.csv")

@@ -116,13 +116,30 @@ def savefig(fig, outdir: Path, name: str, tight=True):
     print(f"  saved {outdir / name}.png/.svg")
 
 
-def panel_label(ax, letter, x=0.02, y=0.96, fontsize=11):
+def panel_label(ax, letter, x=0.02, y=0.96, fontsize=11, outside=False,
+                title=None):
     """Nature-style bold lowercase panel label at the top-left of the axes.
 
     Used by Figures 5-6 (post-restyle); Figures 1-4 keep their own titles.
+    outside=True places the label just above the top-left corner of the
+    axes (left-aligned, 4 pt offset) so it cannot overlap plot content;
+    used by Figure 5, whose panels have bars/error caps reaching the top.
+    title (outside mode only) renders a short panel title in regular
+    weight right next to the bold letter.
     """
-    ax.text(x, y, letter, transform=ax.transAxes, fontweight="bold",
-            fontsize=fontsize, va="top", ha="left")
+    if outside:
+        ax.annotate(letter, xy=(0, 1), xycoords="axes fraction",
+                    xytext=(0, 4), textcoords="offset points",
+                    fontweight="bold", fontsize=fontsize,
+                    ha="left", va="bottom")
+        if title:
+            ax.annotate(title, xy=(0, 1), xycoords="axes fraction",
+                        xytext=(14, 4), textcoords="offset points",
+                        fontsize=fontsize - 1, color="#333333",
+                        ha="left", va="bottom")
+    else:
+        ax.text(x, y, letter, transform=ax.transAxes, fontweight="bold",
+                fontsize=fontsize, va="top", ha="left")
 
 
 # --------------------------------------------------------------------- #

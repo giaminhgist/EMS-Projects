@@ -26,7 +26,8 @@ from scipy import stats
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import (FIG, TAB, HC_COLOR, SZ_COLOR, FEATURE_NAMES,  # noqa: E402
                     FEATURE_GROUPS, feature_group_of, savefig,
-                    load_subject_features, load_metadata, category_of)
+                    panel_label, load_subject_features, load_metadata,
+                    category_of)
 
 OUT = FIG
 CAT_ORDER = ["social", "natural", "synthetic", "manipulated"]
@@ -84,17 +85,19 @@ def fig_effect_sizes():
     ax.set_yticklabels(es.index, fontsize=6.8)
     ax.axvline(0, color="k", lw=0.8)
     ax.set_xlabel("Cohen's d (HC − SZ, subject level; positive = HC larger)")
-    ax.set_title("(a) Effect size of every feature (subject-level, n=80/80)",
-                 fontsize=10.5, pad=20)
+    panel_label(ax, "a", outside=True, title="Effect size of every feature")
     # rainclouds for representative features (one per group)
     ax = fig.add_subplot(gs_top[1])
     reps = ["spa_dispersion", "spa_entropy", "geo_sacc_amp_mean", "tem_dur_mean", "pup_mean"]
-    gs_rain = gridspec.GridSpecFromSubplotSpec(5, 1, subplot_spec=ax.get_subplotspec(),
+    # first grid row is an empty spacer so the panel label above the
+    # container does not touch the top raincloud
+    gs_rain = gridspec.GridSpecFromSubplotSpec(6, 1, subplot_spec=ax.get_subplotspec(),
+                                               height_ratios=[0.06, 1, 1, 1, 1, 1],
                                                hspace=0.4)
-    axes2 = [fig.add_subplot(gs_rain[i]) for i in range(5)]
+    axes2 = [fig.add_subplot(gs_rain[i]) for i in range(1, 6)]
     ax.axis("off")
-    ax.set_title("(b) Representative features, one per group",
-                 fontsize=10.5, pad=20)
+    panel_label(ax, "b", outside=True,
+                title="Representative features, one per group")
     for i, f in enumerate(reps):
         a, b = hc[f].dropna(), sz[f].dropna()
         aax = axes2[i]
@@ -142,9 +145,11 @@ def fig_effect_sizes():
     handles, labels = axes_c[0].get_legend_handles_labels()
     fig.legend(handles, labels, fontsize=8, ncol=2, loc="lower right",
                bbox_to_anchor=(pos.x1, pos.y1 + 0.025))
-    fig.text(pos.x0, pos.y1 + 0.027, "(c) Feature values depend on stimulus "
-             "category — per-subject category means, HC vs SZ",
-             fontsize=10.5, ha="left", va="bottom")
+    fig.text(pos.x0, pos.y1 + 0.027, "c", fontweight="bold", fontsize=11,
+             ha="left", va="bottom")
+    fig.text(pos.x0 + 0.012, pos.y1 + 0.027, "Feature values depend on "
+             "stimulus category", fontsize=10, color="#333333",
+             ha="left", va="bottom")
 
     savefig(fig, OUT, "Figure_3")
     es.to_csv(TAB / "T02.02_effect_sizes.csv")

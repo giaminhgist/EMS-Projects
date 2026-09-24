@@ -28,7 +28,7 @@ META = [
      "Which features discriminate groups, and how does the signal depend on category?",
      "make_feature_figs.py", "stimulus_features_train.pkl",
      "n/a", "n/a", "n=80/80 subjects; 4 features x 4 categories"),
-    ("Figure_4", "05_latent_distribution", "Learned latent space vs the HC normative bank (PCA + heatmap + rank/distance diagnostics)",
+    ("Figure_4", "05_latent_distribution", "Learned latent space vs the HC normative bank (PCA + category deviation + heatmap + distance diagnostic)",
      "Where do SZ live relative to the HC norm, and is the norm stable?",
      "make_latent_figs.py", "cache/latent mlp_deepset seed42 (z, bank, ref_z)",
      "P1 out-of-fold", "seed 42", "160 eval + train-HC ref subjects x 100 stimuli"),
